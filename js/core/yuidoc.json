@@ -1,0 +1,10 @@
+{
+    "name": "Box2 Framework",
+    "description": "Javascript MVC Framework for Android PhoneGap",
+    "version": "0.2b",
+    "url": "http://yuilibrary.com/",
+    "options": {
+        "paths": "*/js",
+        "outdir": "../../docs"
+    }
+}
