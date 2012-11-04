@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>box2.model.js - Box2 Framework</title>
+    <link rel="stylesheet" href="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;3.7.0&#x2F;build&#x2F;cssgrids&#x2F;cssgrids-min.css">
+    <link rel="stylesheet" href="..&#x2F;assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="..&#x2F;assets/css/main.css" id="site_styles">
+    <link rel="shortcut icon" type="image/png" href="..&#x2F;assets/favicon.png">
+    <script src="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;combo?3.7.0&#x2F;build&#x2F;yui&#x2F;yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+            <h3>Box2 Framework</h3>
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: 0.2b</em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+    <h2 class="off-left">APIs</h2>
+    <div id="api-tabview" class="tabview">
+        <ul class="tabs">
+            <li><a href="#api-classes">Classes</a></li>
+            <li><a href="#api-modules">Modules</a></li>
+        </ul>
+
+        <div id="api-tabview-filter">
+            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+        </div>
+
+        <div id="api-tabview-panel">
+            <ul id="api-classes" class="apis classes">
+            
+                <li><a href="..&#x2F;classes/Box2.html">Box2</a></li>
+            
+                <li><a href="..&#x2F;classes/Box2.Ajax.html">Box2.Ajax</a></li>
+            
+                <li><a href="..&#x2F;classes/Box2.Configs.html">Box2.Configs</a></li>
+            
+                <li><a href="..&#x2F;classes/Box2.Controller.html">Box2.Controller</a></li>
+            
+                <li><a href="..&#x2F;classes/Box2.Datasource.SQLite.html">Box2.Datasource.SQLite</a></li>
+            
+                <li><a href="..&#x2F;classes/Box2.Device.html">Box2.Device</a></li>
+            
+                <li><a href="..&#x2F;classes/Box2.Forms.html">Box2.Forms</a></li>
+            
+                <li><a href="..&#x2F;classes/Box2.History.html">Box2.History</a></li>
+            
+                <li><a href="..&#x2F;classes/Box2.HTMLEntities.html">Box2.HTMLEntities</a></li>
+            
+                <li><a href="..&#x2F;classes/Box2.Inflector.html">Box2.Inflector</a></li>
+            
+                <li><a href="..&#x2F;classes/Box2.Loader.html">Box2.Loader</a></li>
+            
+                <li><a href="..&#x2F;classes/Box2.Mapper.html">Box2.Mapper</a></li>
+            
+                <li><a href="..&#x2F;classes/Box2.Model.html">Box2.Model</a></li>
+            
+                <li><a href="..&#x2F;classes/Box2.View.html">Box2.View</a></li>
+            
+            </ul>
+
+            <ul id="api-modules" class="apis modules">
+            
+            </ul>
+        </div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+        Show:
+        <label for="api-show-inherited">
+            <input type="checkbox" id="api-show-inherited" checked>
+            Inherited
+        </label>
+
+        <label for="api-show-protected">
+            <input type="checkbox" id="api-show-protected">
+            Protected
+        </label>
+
+        <label for="api-show-private">
+            <input type="checkbox" id="api-show-private">
+            Private
+        </label>
+        <label for="api-show-deprecated">
+            <input type="checkbox" id="api-show-deprecated">
+            Deprecated
+        </label>
+
+    </div>
+
+
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <h1 class="file-heading">File: box2.model.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+&#x2F;**
+ * Model
+ * 
+ * @class Box2.Model
+ * @constructor
+ *&#x2F;
+Box2.Model = function(){
+
+	&#x2F;**
+	 * Database connection instance
+	 * @attribute dbInstance
+	 * @type Object
+	 *&#x2F;
+	this.dbInstance = false;
+
+	&#x2F;**
+	 * Model&#x27;s table
+	 * @attribute table
+	 * @type String
+	 **&#x2F; 
+	this.table = false;
+
+	&#x2F;** 
+	 * Default order
+	 * @attribute order
+	 * @type String
+	 **&#x2F;
+	this.order = false;
+
+	&#x2F;**
+	 * Primary key name
+	 * @attribute primaryKey
+	 * @type String
+	 **&#x2F;
+	this.primaryKey = &#x27;id&#x27;;
+
+	&#x2F;**
+	 * Fields for return in the query
+	 * @attribute fields
+	 * @type Array
+	 **&#x2F;
+	this.fields = [];
+
+	&#x2F;** 
+	 * Default results limit
+	 * @attribute limit
+	 * @type Number
+	 **&#x2F;
+	this.limit = false;
+
+	&#x2F;**
+	 * Default query&#x27;s conditions
+	 * @attribute conditions
+	 * @type Object
+	 **&#x2F;
+	this.conditions = {};
+
+	&#x2F;&#x2F; Constructor
+	this.__construct = function(){
+		this.dbInstance = Box2.Datasource.SQLite();
+		return this;	
+	};
+
+	&#x2F;** 
+	 * Run a query
+	 *
+	 * @method query
+	 * @param {String}   query    Query to be runed
+	 * @param {Function} callback Sucess callback
+	 * @param {Function} error    Error callback
+	 * @return void
+	 **&#x2F;
+	this.query = function(query, callback, error){
+		var dbInstance = this.dbInstance,
+			callback = callback || function(){},
+			error = error || function(){};
+		
+		dbInstance.query(query, function(transaction, response){
+			if(typeof response != &#x27;undefined&#x27;) {
+				if(response.rows.length &gt; 0){
+					callback(dbInstance.fetch(response)); 
+				} else {
+					callback([]);
+				}
+			}
+		}, function(transaction, errors){
+			error(errors);
+		});
+
+	};
+
+	&#x2F;**
+	 * Parse params and run a query
+	 *
+	 * @method fetch
+	 * @param {Object}   params   Params for the query
+	 * @param {Function} callback Sucess callback
+	 * @param {Function} error    Error callback
+	 * @return void
+	 **&#x2F;
+	this.fetch = function(params, callback, error){
+		var dbInstance = this.dbInstance,
+			callback = callback || function(){};
+
+		that.dbInstance.fetch(this, params, callback, error);
+	};
+
+	&#x2F;**
+	 * Get all register from a table
+	 * 
+	 * @method all
+	 * @param {Object}   params   Params for the query
+	 * @param {Function} callback Sucess callback
+	 * @param {Function} error    Error callback
+	 * @return void
+	 **&#x2F;
+	this.all = function(params, callback, error){
+		this.fetch(params, callback, error);
+	};
+
+	&#x2F;**
+	 * Get first register from a query
+	 *
+	 * @method first
+	 * @param {Object}   params   Params for the query
+	 * @param {Function} callback Sucess callback
+	 * @param {Function} error    Error callback
+	 * @return void
+	 **&#x2F;
+	this.first = function(params, callback, error){		
+		params = params || {};
+		params.limit = 1;
+		this.fetch(params, callback, error);
+	};
+
+	&#x2F;**
+	 * Find a row by primary key
+	 *
+	 * @method firstById
+	 * @param {Integer}  id       Primary key id
+	 * @param {Function} callback Sucess callback
+	 * @param {Function} error    Error callback
+	 * @return void
+	 **&#x2F;
+	this.firstById = function(id, callback, error){
+		var params = {};
+			params.conditions = {};
+			params.conditions[this.primaryKey] = id;
+			params.limit = 1;
+
+		this.fetch(params, callback, error);
+	};
+
+	&#x2F;**
+	 * Save data into the table. 
+ 	 * OBS: If found a field with same name that the primary key this data will 
+ 	 * to be updated. If you wanna to create a new entry maybe you should to use the method insert.
+	 *
+	 * @method save
+	 * @param {Object}   data     Object at format key:value, with the fields and values to save into table
+	 * @param {Function} callback Sucess callback
+	 * @param {Function} error    Error callback
+	 *
+	 **&#x2F;
+	this.save = function(data, callback, error){
+		var method = &#x27;insert&#x27;,
+			callback = callback || function(){},
+			error = error || function(){},
+			field;
+
+		if(typeof data == &#x27;object&#x27;){
+			for(field in data){
+				if(data.hasOwnProperty(field)){
+					if(field == this.primaryKey){
+						method = &#x27;update&#x27;;
+					}
+				}
+			}
+			this[method](data, callback, error);
+		}else{
+			error({ message: &#x27;Data is not a object&#x27; });
+		}
+	};
+
+	&#x2F;**
+	 * Insert a new entry into database
+	 *
+	 * @method insert
+	 * @param {Object}   data     Object at format key:value, with the fields and values to save into table
+	 * @param {Function} callback Sucess callback
+	 * @param {Function} error    Error callback
+	 * @return void
+	 **&#x2F;
+	this.insert = function(data, callback, error){
+		var callback = callback || function(){},
+			error = error || function(){};
+
+		that.dbInstance.insert(this, data, callback, error);
+	};
+
+	&#x2F;**
+	 * Update method abstration
+	 *
+	 * @method update
+	 * @param {Object}   data       Object at format key:value, with the fields and values to update into table
+	 * @param {Object}   conditions Conditions to update
+	 * @param {Function} callback   Sucess callback
+	 * @param {Function} error      {Function} Error callback
+	 * @return void
+	 **&#x2F;
+	this.update = function(data, conditions, callback, error){
+		var callback = callback || function(){},
+			error = error || function(){};
+
+		that.dbInstance.update(this, data, conditions, callback, error);
+	};
+
+	&#x2F;**
+	 * Delete a entry by primary key
+	 *
+	 * @method deleteById
+	 * @param {Number}   id       Primary key value
+	 * @param {Function} callback Sucess callback
+	 * @param {Function} error    Error callback
+	 * @return void
+	 **&#x2F;
+	this.deleteById = function(id, callback, error){
+		var callback = callback || function(){},
+			error = error || function(){},
+			params = {};
+			
+			params.conditions = {};
+			params.conditions[this.primaryKey] = id;
+
+		if(!isNaN(parseInt(id))){
+			this.deleteAll(params, callback, error);
+		} else {
+			error({ message : &#x27;Id param is not a interger number&#x27;});
+		}
+	};
+
+	&#x2F;**
+	 * Delete all entry by a condition
+	 *
+	 * @method deleteAll
+	 * @param {Object}   params   Params for the query
+	 * @param {Function} callback Sucess callback
+	 * @param {Function} error    Error callback
+	 * @return void
+	 **&#x2F;
+	this.deleteAll = function(params, callback, error){
+		var callback = callback || function(){},
+			error = error || function(){};
+
+		that.dbInstance.remove(this, params, callback, error);
+	};
+	
+	&#x2F;&#x2F; Call the constructor
+	return this.__construct.apply(this, arguments);
+}
+
+    </pre>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="..&#x2F;assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="..&#x2F;assets/js/yui-prettify.js"></script>
+<script src="..&#x2F;assets/../api.js"></script>
+<script src="..&#x2F;assets/js/api-filter.js"></script>
+<script src="..&#x2F;assets/js/api-list.js"></script>
+<script src="..&#x2F;assets/js/api-search.js"></script>
+<script src="..&#x2F;assets/js/apidocs.js"></script>
+</body>
+</html>

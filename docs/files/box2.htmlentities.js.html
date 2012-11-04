@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>box2.htmlentities.js - Box2 Framework</title>
+    <link rel="stylesheet" href="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;3.7.0&#x2F;build&#x2F;cssgrids&#x2F;cssgrids-min.css">
+    <link rel="stylesheet" href="..&#x2F;assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="..&#x2F;assets/css/main.css" id="site_styles">
+    <link rel="shortcut icon" type="image/png" href="..&#x2F;assets/favicon.png">
+    <script src="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;combo?3.7.0&#x2F;build&#x2F;yui&#x2F;yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+            <h3>Box2 Framework</h3>
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: 0.2b</em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+    <h2 class="off-left">APIs</h2>
+    <div id="api-tabview" class="tabview">
+        <ul class="tabs">
+            <li><a href="#api-classes">Classes</a></li>
+            <li><a href="#api-modules">Modules</a></li>
+        </ul>
+
+        <div id="api-tabview-filter">
+            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+        </div>
+
+        <div id="api-tabview-panel">
+            <ul id="api-classes" class="apis classes">
+            
+                <li><a href="..&#x2F;classes/Box2.html">Box2</a></li>
+            
+                <li><a href="..&#x2F;classes/Box2.Ajax.html">Box2.Ajax</a></li>
+            
+                <li><a href="..&#x2F;classes/Box2.Configs.html">Box2.Configs</a></li>
+            
+                <li><a href="..&#x2F;classes/Box2.Controller.html">Box2.Controller</a></li>
+            
+                <li><a href="..&#x2F;classes/Box2.Datasource.SQLite.html">Box2.Datasource.SQLite</a></li>
+            
+                <li><a href="..&#x2F;classes/Box2.Device.html">Box2.Device</a></li>
+            
+                <li><a href="..&#x2F;classes/Box2.Forms.html">Box2.Forms</a></li>
+            
+                <li><a href="..&#x2F;classes/Box2.History.html">Box2.History</a></li>
+            
+                <li><a href="..&#x2F;classes/Box2.HTMLEntities.html">Box2.HTMLEntities</a></li>
+            
+                <li><a href="..&#x2F;classes/Box2.Inflector.html">Box2.Inflector</a></li>
+            
+                <li><a href="..&#x2F;classes/Box2.Loader.html">Box2.Loader</a></li>
+            
+                <li><a href="..&#x2F;classes/Box2.Mapper.html">Box2.Mapper</a></li>
+            
+                <li><a href="..&#x2F;classes/Box2.Model.html">Box2.Model</a></li>
+            
+                <li><a href="..&#x2F;classes/Box2.View.html">Box2.View</a></li>
+            
+            </ul>
+
+            <ul id="api-modules" class="apis modules">
+            
+            </ul>
+        </div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+        Show:
+        <label for="api-show-inherited">
+            <input type="checkbox" id="api-show-inherited" checked>
+            Inherited
+        </label>
+
+        <label for="api-show-protected">
+            <input type="checkbox" id="api-show-protected">
+            Protected
+        </label>
+
+        <label for="api-show-private">
+            <input type="checkbox" id="api-show-private">
+            Private
+        </label>
+        <label for="api-show-deprecated">
+            <input type="checkbox" id="api-show-deprecated">
+            Deprecated
+        </label>
+
+    </div>
+
+
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <h1 class="file-heading">File: box2.htmlentities.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+&#x2F;**
+ * HTML Entities utils
+ *
+ * @static
+ * @class Box2.HTMLEntities
+ *&#x2F;
+Box2.HTMLEntities = function(){
+	
+	&#x2F;**
+	 * Encode a string for HTML Entities
+	 * 
+	 * @method encode
+	 * @param  {String} string  String for encode
+	 * @return {String}         Encoded string
+ 	 *&#x2F;
+	this.encode = function(string){
+		return string.replace(&#x2F;ª&#x2F;g,&#x27;&amp;ordf;&#x27;).
+				replace(&#x2F;º&#x2F;g,&#x27;&amp;ordm;&#x27;).
+				replace(&#x2F;À&#x2F;g,&#x27;&amp;Agrave;&#x27;).
+				replace(&#x2F;Á&#x2F;g,&#x27;&amp;Aacute;&#x27;).
+				replace(&#x2F;Â&#x2F;g,&#x27;&amp;Acirc;&#x27;).
+				replace(&#x2F;Ã&#x2F;g,&#x27;&amp;Atilde;&#x27;).
+				replace(&#x2F;Ç&#x2F;g,&#x27;&amp;Ccedil;&#x27;).
+				replace(&#x2F;È&#x2F;g,&#x27;&amp;Egrave;&#x27;).
+				replace(&#x2F;É&#x2F;g,&#x27;&amp;Eacute;&#x27;).
+				replace(&#x2F;Ê&#x2F;g,&#x27;&amp;Ecirc;&#x27;).
+				replace(&#x2F;Ì&#x2F;g,&#x27;&amp;Igrave;&#x27;).
+				replace(&#x2F;Í&#x2F;g,&#x27;&amp;Iacute;&#x27;).
+				replace(&#x2F;Î&#x2F;g,&#x27;&amp;Icirc;&#x27;).
+				replace(&#x2F;Ò&#x2F;g,&#x27;&amp;Ograve;&#x27;).
+				replace(&#x2F;Ó&#x2F;g,&#x27;&amp;Oacute;&#x27;).
+				replace(&#x2F;Ô&#x2F;g,&#x27;&amp;Ocirc;&#x27;).
+				replace(&#x2F;Õ&#x2F;g,&#x27;&amp;Otilde;&#x27;).
+				replace(&#x2F;Ù&#x2F;g,&#x27;&amp;Ugrave;&#x27;).
+				replace(&#x2F;Ú&#x2F;g,&#x27;&amp;Uacute;&#x27;).
+				replace(&#x2F;Û&#x2F;g,&#x27;&amp;Ucirc;&#x27;).
+				replace(&#x2F;Ü&#x2F;g,&#x27;&amp;Uuml;&#x27;).
+				replace(&#x2F;à&#x2F;g,&#x27;&amp;agrave;&#x27;).
+				replace(&#x2F;á&#x2F;g,&#x27;&amp;aacute;&#x27;).
+				replace(&#x2F;â&#x2F;g,&#x27;&amp;acirc;&#x27;).
+				replace(&#x2F;ã&#x2F;g,&#x27;&amp;atilde;&#x27;).
+				replace(&#x2F;ç&#x2F;g,&#x27;&amp;ccedil;&#x27;).
+				replace(&#x2F;è&#x2F;g,&#x27;&amp;egrave;&#x27;).
+				replace(&#x2F;ê&#x2F;g,&#x27;&amp;ecirc;&#x27;).
+				replace(&#x2F;ì&#x2F;g,&#x27;&amp;igrave;&#x27;).
+				replace(&#x2F;í&#x2F;g,&#x27;&amp;iacute;&#x27;).
+				replace(&#x2F;î&#x2F;g,&#x27;&amp;icirc;&#x27;).
+				replace(&#x2F;ò&#x2F;g,&#x27;&amp;ograve;&#x27;).
+				replace(&#x2F;ó&#x2F;g,&#x27;&amp;oacute;&#x27;).
+				replace(&#x2F;ô&#x2F;g,&#x27;&amp;ocirc;&#x27;).
+				replace(&#x2F;õ&#x2F;g,&#x27;&amp;otilde;&#x27;).
+				replace(&#x2F;ù&#x2F;g,&#x27;&amp;ugrave;&#x27;).
+				replace(&#x2F;ú&#x2F;g,&#x27;&amp;uacute;&#x27;).
+				replace(&#x2F;û&#x2F;g,&#x27;&amp;ucirc;&#x27;).
+				replace(&#x2F;ü&#x2F;g,&#x27;&amp;uuml;&#x27;); 
+	};
+
+	&#x2F;**
+	 * Decode a string with HTML entities
+	 * 
+	 * @method decode
+	 * @param  {String} string String for decode
+	 * @return {String}        Decoded string
+	 *&#x2F;
+	this.decode = function(string){
+		return string.replace(&#x2F;&amp;ordf;&#x2F;g,&#x27;ª&#x27;).
+			replace(&#x2F;&amp;ordm;&#x2F;g,&#x27;º&#x27;).
+			replace(&#x2F;&amp;Agrave;&#x2F;g,&#x27;À&#x27;).
+			replace(&#x2F;&amp;Aacute;&#x2F;g,&#x27;Á&#x27;).
+			replace(&#x2F;&amp;Acirc;&#x2F;g,&#x27;Â&#x27;).
+			replace(&#x2F;&amp;Atilde;&#x2F;g,&#x27;Ã&#x27;).
+			replace(&#x2F;&amp;Ccedil;&#x2F;g,&#x27;Ç&#x27;).
+			replace(&#x2F;&amp;Egrave;&#x2F;g,&#x27;È&#x27;).
+			replace(&#x2F;&amp;Eacute;&#x2F;g,&#x27;É&#x27;).
+			replace(&#x2F;&amp;Ecirc;&#x2F;g,&#x27;Ê&#x27;).
+			replace(&#x2F;&amp;Igrave;&#x2F;g,&#x27;Ì&#x27;).
+			replace(&#x2F;&amp;Iacute;&#x2F;g,&#x27;Í&#x27;).
+			replace(&#x2F;&amp;Icirc;&#x2F;g,&#x27;Î&#x27;).
+			replace(&#x2F;&amp;Ograve;&#x2F;g,&#x27;Ò&#x27;).
+			replace(&#x2F;&amp;Oacute;&#x2F;g,&#x27;Ó&#x27;).
+			replace(&#x2F;&amp;Ocirc;&#x2F;g,&#x27;Ô&#x27;).
+			replace(&#x2F;&amp;Otilde;&#x2F;g,&#x27;Õ&#x27;).
+			replace(&#x2F;&amp;Ugrave;&#x2F;g,&#x27;Ù&#x27;).
+			replace(&#x2F;&amp;Uacute;&#x2F;g,&#x27;Ú&#x27;).
+			replace(&#x2F;&amp;Ucirc;&#x2F;g,&#x27;Û&#x27;).
+			replace(&#x2F;&amp;Uuml;&#x2F;g,&#x27;Ü&#x27;).
+			replace(&#x2F;&amp;agrave;&#x2F;g,&#x27;à&#x27;).
+			replace(&#x2F;&amp;aacute;&#x2F;g,&#x27;á&#x27;).
+			replace(&#x2F;&amp;acirc;&#x2F;g,&#x27;â&#x27;).
+			replace(&#x2F;&amp;atilde;&#x2F;g,&#x27;ã&#x27;).
+			replace(&#x2F;&amp;ccedil;&#x2F;g,&#x27;ç&#x27;).
+			replace(&#x2F;&amp;egrave;&#x2F;g,&#x27;è&#x27;).
+			replace(&#x2F;&amp;ecirc;&#x2F;g,&#x27;ê&#x27;).
+			replace(&#x2F;&amp;igrave;&#x2F;g,&#x27;ì&#x27;).
+			replace(&#x2F;&amp;iacute;&#x2F;g,&#x27;í&#x27;).
+			replace(&#x2F;&amp;icirc;&#x2F;g,&#x27;î&#x27;).
+			replace(&#x2F;&amp;ograve;&#x2F;g,&#x27;ò&#x27;).
+			replace(&#x2F;&amp;oacute;&#x2F;g,&#x27;ó&#x27;).
+			replace(&#x2F;&amp;ocirc;&#x2F;g,&#x27;ô&#x27;).
+			replace(&#x2F;&amp;otilde;&#x2F;g,&#x27;õ&#x27;).
+			replace(&#x2F;&amp;ugrave;&#x2F;g,&#x27;ù&#x27;).
+			replace(&#x2F;&amp;uacute;&#x2F;g,&#x27;ú&#x27;).
+			replace(&#x2F;&amp;ucirc;&#x2F;g,&#x27;û&#x27;).
+			replace(&#x2F;&amp;uuml;&#x2F;g,&#x27;ü&#x27;);
+	};
+};
+
+Box2.HTMLEntities = new Box2.HTMLEntities();
+
+    </pre>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="..&#x2F;assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="..&#x2F;assets/js/yui-prettify.js"></script>
+<script src="..&#x2F;assets/../api.js"></script>
+<script src="..&#x2F;assets/js/api-filter.js"></script>
+<script src="..&#x2F;assets/js/api-list.js"></script>
+<script src="..&#x2F;assets/js/api-search.js"></script>
+<script src="..&#x2F;assets/js/apidocs.js"></script>
+</body>
+</html>

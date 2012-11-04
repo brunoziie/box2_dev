@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>box2.ajax.js - Box2 Framework</title>
+    <link rel="stylesheet" href="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;3.7.0&#x2F;build&#x2F;cssgrids&#x2F;cssgrids-min.css">
+    <link rel="stylesheet" href="..&#x2F;assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="..&#x2F;assets/css/main.css" id="site_styles">
+    <link rel="shortcut icon" type="image/png" href="..&#x2F;assets/favicon.png">
+    <script src="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;combo?3.7.0&#x2F;build&#x2F;yui&#x2F;yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+            <h3>Box2 Framework</h3>
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: 0.2b</em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+    <h2 class="off-left">APIs</h2>
+    <div id="api-tabview" class="tabview">
+        <ul class="tabs">
+            <li><a href="#api-classes">Classes</a></li>
+            <li><a href="#api-modules">Modules</a></li>
+        </ul>
+
+        <div id="api-tabview-filter">
+            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+        </div>
+
+        <div id="api-tabview-panel">
+            <ul id="api-classes" class="apis classes">
+            
+                <li><a href="..&#x2F;classes/Box2.html">Box2</a></li>
+            
+                <li><a href="..&#x2F;classes/Box2.Ajax.html">Box2.Ajax</a></li>
+            
+                <li><a href="..&#x2F;classes/Box2.Configs.html">Box2.Configs</a></li>
+            
+                <li><a href="..&#x2F;classes/Box2.Controller.html">Box2.Controller</a></li>
+            
+                <li><a href="..&#x2F;classes/Box2.Datasource.SQLite.html">Box2.Datasource.SQLite</a></li>
+            
+                <li><a href="..&#x2F;classes/Box2.Device.html">Box2.Device</a></li>
+            
+                <li><a href="..&#x2F;classes/Box2.Forms.html">Box2.Forms</a></li>
+            
+                <li><a href="..&#x2F;classes/Box2.History.html">Box2.History</a></li>
+            
+                <li><a href="..&#x2F;classes/Box2.HTMLEntities.html">Box2.HTMLEntities</a></li>
+            
+                <li><a href="..&#x2F;classes/Box2.Inflector.html">Box2.Inflector</a></li>
+            
+                <li><a href="..&#x2F;classes/Box2.Loader.html">Box2.Loader</a></li>
+            
+                <li><a href="..&#x2F;classes/Box2.Mapper.html">Box2.Mapper</a></li>
+            
+                <li><a href="..&#x2F;classes/Box2.Model.html">Box2.Model</a></li>
+            
+                <li><a href="..&#x2F;classes/Box2.View.html">Box2.View</a></li>
+            
+            </ul>
+
+            <ul id="api-modules" class="apis modules">
+            
+            </ul>
+        </div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+        Show:
+        <label for="api-show-inherited">
+            <input type="checkbox" id="api-show-inherited" checked>
+            Inherited
+        </label>
+
+        <label for="api-show-protected">
+            <input type="checkbox" id="api-show-protected">
+            Protected
+        </label>
+
+        <label for="api-show-private">
+            <input type="checkbox" id="api-show-private">
+            Private
+        </label>
+        <label for="api-show-deprecated">
+            <input type="checkbox" id="api-show-deprecated">
+            Deprecated
+        </label>
+
+    </div>
+
+
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <h1 class="file-heading">File: box2.ajax.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+&#x2F;**
+ * AJAX utils
+ * 
+ * @class Box2.Ajax
+ * @constructor
+ * @param async {Boolean} True if will to use async request
+ *&#x2F;
+Box2.Ajax = function(){
+	
+	var that = {};
+	
+	&#x2F;**
+	 * Storage XMLHttpRequest object
+	 * @private
+	 * @attribute link
+	 * @type Object 
+	 *&#x2F;
+	that.link = null;
+
+	&#x2F;**
+	 * Set if the request will to be async
+	 * @private
+	 * @attribute async
+	 * @type Boolean 
+	 *&#x2F;
+	that.async = false;
+	
+	&#x2F;&#x2F; Contructor
+	this.__construct = function(async){
+		that.async = async || false;
+		that.link = new XMLHttpRequest();
+		return this;
+	};
+	
+	&#x2F;**
+	 * Send a HTTP request
+	 * 
+	 * @method request
+	 * @param  {String} url     Url to send the request
+	 * @param  {String} method  Method of the request &lt;POST|GET&gt;
+	 * @return {String}         Result of the request or a empty string if to happen some error
+	 *&#x2F;
+	this.request = function(url, method, params){
+		var queryString;
+		method = method || &quot;GET&quot;;
+		params = params || {};
+		queryString = that.__parseParams(params);
+
+		try{
+			that.link.open(method, url, that.async);
+			if(method == &#x27;POST&#x27; &amp;&amp; queryString != &#x27;&#x27;){
+				that.link.setRequestHeader(&#x27;Content-type&#x27;, &#x27;application&#x2F;x-www-form-urlencoded&#x27;);
+			};
+			that.link.send();
+			return that.link.responseText;			
+		} catch(e) {
+			return &#x27;&#x27;;
+		}
+	};
+	
+	&#x2F;**
+	 * Mount a querystring from a object
+	 * 
+	 * @private
+	 * @method __parseParams
+	 * @param  {Object} params List of params
+	 * @return {String}        Querystring with the params
+	 *&#x2F;
+	that.__parseParams = function(params){
+		var parts = [], i;
+
+		for(i in params) {
+			if(params.hasOwnProperty(i)) {
+				parts.push(encodeURIComponent(i) + &quot;=&quot; + encodeURIComponent(params[i]));
+			}
+		}
+
+		return parts.join(&quot;&amp;&quot;);
+	}
+
+	&#x2F;&#x2F; Call the constructor
+	return this.__construct.apply(this, arguments);
+};
+
+    </pre>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="..&#x2F;assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="..&#x2F;assets/js/yui-prettify.js"></script>
+<script src="..&#x2F;assets/../api.js"></script>
+<script src="..&#x2F;assets/js/api-filter.js"></script>
+<script src="..&#x2F;assets/js/api-list.js"></script>
+<script src="..&#x2F;assets/js/api-search.js"></script>
+<script src="..&#x2F;assets/js/apidocs.js"></script>
+</body>
+</html>

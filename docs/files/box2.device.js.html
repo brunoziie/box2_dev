@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>box2.device.js - Box2 Framework</title>
+    <link rel="stylesheet" href="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;3.7.0&#x2F;build&#x2F;cssgrids&#x2F;cssgrids-min.css">
+    <link rel="stylesheet" href="..&#x2F;assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="..&#x2F;assets/css/main.css" id="site_styles">
+    <link rel="shortcut icon" type="image/png" href="..&#x2F;assets/favicon.png">
+    <script src="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;combo?3.7.0&#x2F;build&#x2F;yui&#x2F;yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+            <h3>Box2 Framework</h3>
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: 0.2b</em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+    <h2 class="off-left">APIs</h2>
+    <div id="api-tabview" class="tabview">
+        <ul class="tabs">
+            <li><a href="#api-classes">Classes</a></li>
+            <li><a href="#api-modules">Modules</a></li>
+        </ul>
+
+        <div id="api-tabview-filter">
+            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+        </div>
+
+        <div id="api-tabview-panel">
+            <ul id="api-classes" class="apis classes">
+            
+                <li><a href="..&#x2F;classes/Box2.html">Box2</a></li>
+            
+                <li><a href="..&#x2F;classes/Box2.Ajax.html">Box2.Ajax</a></li>
+            
+                <li><a href="..&#x2F;classes/Box2.Configs.html">Box2.Configs</a></li>
+            
+                <li><a href="..&#x2F;classes/Box2.Controller.html">Box2.Controller</a></li>
+            
+                <li><a href="..&#x2F;classes/Box2.Datasource.SQLite.html">Box2.Datasource.SQLite</a></li>
+            
+                <li><a href="..&#x2F;classes/Box2.Device.html">Box2.Device</a></li>
+            
+                <li><a href="..&#x2F;classes/Box2.Forms.html">Box2.Forms</a></li>
+            
+                <li><a href="..&#x2F;classes/Box2.History.html">Box2.History</a></li>
+            
+                <li><a href="..&#x2F;classes/Box2.HTMLEntities.html">Box2.HTMLEntities</a></li>
+            
+                <li><a href="..&#x2F;classes/Box2.Inflector.html">Box2.Inflector</a></li>
+            
+                <li><a href="..&#x2F;classes/Box2.Loader.html">Box2.Loader</a></li>
+            
+                <li><a href="..&#x2F;classes/Box2.Mapper.html">Box2.Mapper</a></li>
+            
+                <li><a href="..&#x2F;classes/Box2.Model.html">Box2.Model</a></li>
+            
+                <li><a href="..&#x2F;classes/Box2.View.html">Box2.View</a></li>
+            
+            </ul>
+
+            <ul id="api-modules" class="apis modules">
+            
+            </ul>
+        </div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+        Show:
+        <label for="api-show-inherited">
+            <input type="checkbox" id="api-show-inherited" checked>
+            Inherited
+        </label>
+
+        <label for="api-show-protected">
+            <input type="checkbox" id="api-show-protected">
+            Protected
+        </label>
+
+        <label for="api-show-private">
+            <input type="checkbox" id="api-show-private">
+            Private
+        </label>
+        <label for="api-show-deprecated">
+            <input type="checkbox" id="api-show-deprecated">
+            Deprecated
+        </label>
+
+    </div>
+
+
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <h1 class="file-heading">File: box2.device.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+&#x2F;**
+ * Device utils
+ * 
+ * @class Box2.Device
+ * @constructor
+ *&#x2F;
+Box2.Device = function(){
+
+	var that = {};
+
+	&#x2F;**
+	 * Device screen height
+	 *
+	 * @attribute height 
+	 * @private
+	 * @type Integer
+	 *&#x2F;
+	that.height = 0;
+
+	&#x2F;**
+	 * Device screen width
+	 *
+	 * @attribute width 
+	 * @private
+	 * @type Integer
+	 *&#x2F;
+	that.width = 0;
+
+	&#x2F;**
+	 * App heigth ( without status bar )
+	 *
+	 * @attribute innerHeight 
+	 * @private
+	 * @type Integer
+	 *&#x2F;
+	that.innerHeight = 0;
+
+	&#x2F;**
+	 * App width ( without status bar )
+	 *
+	 * @attribute innerWidth 
+	 * @private
+	 * @type Integer
+	 *&#x2F;
+	that.innerWidth = 0;
+
+	&#x2F;&#x2F; Contructor
+	this.__construct = function(){
+		that.width = screen.width;
+		that.height = screen.height;
+		that.innerWidth = window.innerWidth;
+		that.innerHeight = window.innerHeight;
+		return this;
+	};
+
+	&#x2F;**
+	 * Get sizes 
+	 *
+	 * @method getSize
+	 * @param type {String} Size for returns ( height, width, innerWidth or innerHeight )
+	 * @return {Mixed} False if given an invalid type, Integer if is alright
+	 **&#x2F;
+	this.getSize = function(type){
+		if(that[type] !== undefined){
+			return parseInt(that[type]);
+		} else {
+			return false;
+		}
+	};
+	
+	&#x2F;&#x2F; Call the constructor
+	return this.__construct.apply(this, arguments);
+};
+
+    </pre>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="..&#x2F;assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="..&#x2F;assets/js/yui-prettify.js"></script>
+<script src="..&#x2F;assets/../api.js"></script>
+<script src="..&#x2F;assets/js/api-filter.js"></script>
+<script src="..&#x2F;assets/js/api-list.js"></script>
+<script src="..&#x2F;assets/js/api-search.js"></script>
+<script src="..&#x2F;assets/js/apidocs.js"></script>
+</body>
+</html>

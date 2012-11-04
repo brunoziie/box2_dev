@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>box2.inflector.js - Box2 Framework</title>
+    <link rel="stylesheet" href="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;3.7.0&#x2F;build&#x2F;cssgrids&#x2F;cssgrids-min.css">
+    <link rel="stylesheet" href="..&#x2F;assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="..&#x2F;assets/css/main.css" id="site_styles">
+    <link rel="shortcut icon" type="image/png" href="..&#x2F;assets/favicon.png">
+    <script src="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;combo?3.7.0&#x2F;build&#x2F;yui&#x2F;yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+            <h3>Box2 Framework</h3>
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: 0.2b</em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+    <h2 class="off-left">APIs</h2>
+    <div id="api-tabview" class="tabview">
+        <ul class="tabs">
+            <li><a href="#api-classes">Classes</a></li>
+            <li><a href="#api-modules">Modules</a></li>
+        </ul>
+
+        <div id="api-tabview-filter">
+            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+        </div>
+
+        <div id="api-tabview-panel">
+            <ul id="api-classes" class="apis classes">
+            
+                <li><a href="..&#x2F;classes/Box2.html">Box2</a></li>
+            
+                <li><a href="..&#x2F;classes/Box2.Ajax.html">Box2.Ajax</a></li>
+            
+                <li><a href="..&#x2F;classes/Box2.Configs.html">Box2.Configs</a></li>
+            
+                <li><a href="..&#x2F;classes/Box2.Controller.html">Box2.Controller</a></li>
+            
+                <li><a href="..&#x2F;classes/Box2.Datasource.SQLite.html">Box2.Datasource.SQLite</a></li>
+            
+                <li><a href="..&#x2F;classes/Box2.Device.html">Box2.Device</a></li>
+            
+                <li><a href="..&#x2F;classes/Box2.Forms.html">Box2.Forms</a></li>
+            
+                <li><a href="..&#x2F;classes/Box2.History.html">Box2.History</a></li>
+            
+                <li><a href="..&#x2F;classes/Box2.HTMLEntities.html">Box2.HTMLEntities</a></li>
+            
+                <li><a href="..&#x2F;classes/Box2.Inflector.html">Box2.Inflector</a></li>
+            
+                <li><a href="..&#x2F;classes/Box2.Loader.html">Box2.Loader</a></li>
+            
+                <li><a href="..&#x2F;classes/Box2.Mapper.html">Box2.Mapper</a></li>
+            
+                <li><a href="..&#x2F;classes/Box2.Model.html">Box2.Model</a></li>
+            
+                <li><a href="..&#x2F;classes/Box2.View.html">Box2.View</a></li>
+            
+            </ul>
+
+            <ul id="api-modules" class="apis modules">
+            
+            </ul>
+        </div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+        Show:
+        <label for="api-show-inherited">
+            <input type="checkbox" id="api-show-inherited" checked>
+            Inherited
+        </label>
+
+        <label for="api-show-protected">
+            <input type="checkbox" id="api-show-protected">
+            Protected
+        </label>
+
+        <label for="api-show-private">
+            <input type="checkbox" id="api-show-private">
+            Private
+        </label>
+        <label for="api-show-deprecated">
+            <input type="checkbox" id="api-show-deprecated">
+            Deprecated
+        </label>
+
+    </div>
+
+
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <h1 class="file-heading">File: box2.inflector.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+&#x2F;**
+ * Text formater utils
+ * 
+ * @static
+ * @class Box2.Inflector
+ *&#x2F;
+Box2.Inflector = function(){
+	
+	var that = {};
+	&#x2F;**
+	 * Translation table
+	 * 
+	 * @attribute
+	 * @private
+	 * @type Array
+	 **&#x2F;
+	that.translationTable = [
+		[&#x27;ä|æ|ǽ&#x27;,&#x27;ae&#x27;], [&#x27;ö|œ&#x27;,&#x27;oe&#x27;], [&#x27;ü&#x27;,&#x27;ue&#x27;], [&#x27;Ä&#x27;,&#x27;Ae&#x27;], [&#x27;Ü&#x27;,&#x27;Ue&#x27;], [&#x27;Ö&#x27;,&#x27;Oe&#x27;], 
+		[&#x27;À|Á|Â|Ã|Ä|Å|Ǻ|Ā|Ă|Ą|Ǎ&#x27;,&#x27;A&#x27;], [&#x27;à|á|â|ã|å|ǻ|ā|ă|ą|ǎ|ª&#x27;,&#x27;a&#x27;], [&#x27;Ç|Ć|Ĉ|Ċ|Č&#x27;,&#x27;C&#x27;], 
+		[&#x27;ç|ć|ĉ|ċ|č&#x27;,&#x27;c&#x27;], [&#x27;Ð|Ď|Đ&#x27;,&#x27;D&#x27;], [&#x27;ð|ď|đ&#x27;,&#x27;d&#x27;], [&#x27;È|É|Ê|Ë|Ē|Ĕ|Ė|Ę|Ě&#x27;,&#x27;E&#x27;], 
+		[&#x27;è|é|ê|ë|ē|ĕ|ė|ę|ě&#x27;,&#x27;e&#x27;], [&#x27;Ĝ|Ğ|Ġ|Ģ&#x27;,&#x27;G&#x27;], [&#x27;ĝ|ğ|ġ|ģ&#x27;,&#x27;g&#x27;], [&#x27;Ĥ|Ħ&#x27;,&#x27;H&#x27;], 
+		[&#x27;ĥ|ħ&#x27;,&#x27;h&#x27;], [&#x27;Ì|Í|Î|Ï|Ĩ|Ī|Ĭ|Ǐ|Į|İ&#x27;,&#x27;I&#x27;], [&#x27;ì|í|î|ï|ĩ|ī|ĭ|ǐ|į|ı&#x27;,&#x27;i&#x27;], [&#x27;Ĵ&#x27;,&#x27;J&#x27;], 
+		[&#x27;ĵ&#x27;,&#x27;j&#x27;], [&#x27;Ķ&#x27;,&#x27;K&#x27;], [&#x27;ķ&#x27;,&#x27;k&#x27;], [&#x27;Ĺ|Ļ|Ľ|Ŀ|Ł&#x27;,&#x27;L&#x27;], [&#x27;ĺ|ļ|ľ|ŀ|ł&#x27;,&#x27;l&#x27;], [&#x27;Ñ|Ń|Ņ|Ň&#x27;,&#x27;N&#x27;], 
+		[&#x27;ñ|ń|ņ|ň|ŉ&#x27;,&#x27;n&#x27;], [&#x27;Ò|Ó|Ô|Õ|Ō|Ŏ|Ǒ|Ő|Ơ|Ø|Ǿ&#x27;,&#x27;O&#x27;], [&#x27;ò|ó|ô|õ|ō|ŏ|ǒ|ő|ơ|ø|ǿ|º&#x27;,&#x27;o&#x27;], 
+		[&#x27;Ŕ|Ŗ|Ř&#x27;,&#x27;R&#x27;], [&#x27;ŕ|ŗ|ř&#x27;,&#x27;r&#x27;], [&#x27;Ś|Ŝ|Ş|Š&#x27;,&#x27;S&#x27;], [&#x27;ś|ŝ|ş|š|ſ&#x27;,&#x27;s&#x27;], [&#x27;Ţ|Ť|Ŧ&#x27;,&#x27;T&#x27;], [&#x27;ţ|ť|ŧ&#x27;,&#x27;t&#x27;], 
+		[&#x27;Ù|Ú|Û|Ũ|Ū|Ŭ|Ů|Ű|Ų|Ư|Ǔ|Ǖ|Ǘ|Ǚ|Ǜ&#x27;,&#x27;U&#x27;], [&#x27;ù|ú|û|ũ|ū|ŭ|ů|ű|ų|ư|ǔ|ǖ|ǘ|ǚ|ǜ&#x27;,&#x27;u&#x27;], [&#x27;Ý|Ÿ|Ŷ&#x27;,&#x27;Y&#x27;], 
+		[&#x27;ý|ÿ|ŷ&#x27;,&#x27;y&#x27;], [&#x27;Ŵ&#x27;,&#x27;W&#x27;], [&#x27;ŵ&#x27;,&#x27;w&#x27;], [&#x27;Ź|Ż|Ž&#x27;,&#x27;Z&#x27;], [&#x27;ź|ż|ž&#x27;,&#x27;z&#x27;], [&#x27;Æ|Ǽ&#x27;,&#x27;AE&#x27;], [&#x27;ß&#x27;,&#x27;ss&#x27;], 
+		[&#x27;Ĳ&#x27;,&#x27;IJ&#x27;], [&#x27;ĳ&#x27;,&#x27;ij&#x27;], [&#x27;Œ&#x27;,&#x27;OE&#x27;], [&#x27;ƒ&#x27;,&#x27;f&#x27;]
+	];
+
+	&#x2F;&#x2F; Constructor
+	this.__construct = function(){
+		return this;
+	};
+
+	&#x2F;**
+	 * First character to uppercase
+	 *
+	 * @method capitalize
+	 * @param  {String} string String for change
+	 * @return {String}
+	 **&#x2F;
+	this.capitalize = function(string){
+		var firstChar = string.substr(0, 1).toUpperCase();
+		return string.replace( &#x2F;(^|\s)([a-z])&#x2F; , firstChar);
+	};
+
+	&#x2F;**
+	 * Remove special chars and replace spaces by underscore
+	 * 
+	 * @method slug
+	 * @param  {String} string       String for change
+	 * @param  {String} replacement  Character for replace spaces
+	 * @return {String}
+	 **&#x2F;
+	this.slug = function(string, replacement){		
+		var replacement = replacement || &#x27;_&#x27;,
+			len = that.translationTable.length,
+			i;
+
+		for (i = len - 1; i &gt;= 0; i--){
+			regex = new RegExp(that.translationTable[i][0]);
+			string = string.replace(regex, that.translationTable[i][1]);
+		}
+
+		return string.replace(&#x2F;\ +&#x2F;, &#x27; &#x27;).replace(&#x2F;[^a-zA-Z0-9\ ]&#x2F;, &#x27;&#x27;).replace(&#x27; &#x27;, replacement).toLowerCase();
+	};
+
+	&#x2F;**
+	 * Converts CamelCase to string separated by underscore
+	 *
+	 * @method humanize
+	 * @param  {String} string      String for change
+	 * @return {String}             Modified string
+	 *&#x2F;
+	this.humanize = function(string){
+		return string.replace(&#x2F;(.)([A-Z])&#x2F;g, &quot;$1_$2&quot;).toLowerCase();
+	};
+
+	&#x2F;&#x2F; Call the constructor
+	return this.__construct.apply(this, arguments);
+};
+
+Box2.Inflector = new Box2.Inflector();
+
+    </pre>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="..&#x2F;assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="..&#x2F;assets/js/yui-prettify.js"></script>
+<script src="..&#x2F;assets/../api.js"></script>
+<script src="..&#x2F;assets/js/api-filter.js"></script>
+<script src="..&#x2F;assets/js/api-list.js"></script>
+<script src="..&#x2F;assets/js/api-search.js"></script>
+<script src="..&#x2F;assets/js/apidocs.js"></script>
+</body>
+</html>

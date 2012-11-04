@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>box2.js - Box2 Framework</title>
+    <link rel="stylesheet" href="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;3.7.0&#x2F;build&#x2F;cssgrids&#x2F;cssgrids-min.css">
+    <link rel="stylesheet" href="..&#x2F;assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="..&#x2F;assets/css/main.css" id="site_styles">
+    <link rel="shortcut icon" type="image/png" href="..&#x2F;assets/favicon.png">
+    <script src="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;combo?3.7.0&#x2F;build&#x2F;yui&#x2F;yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+            <h3>Box2 Framework</h3>
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: 0.2b</em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+    <h2 class="off-left">APIs</h2>
+    <div id="api-tabview" class="tabview">
+        <ul class="tabs">
+            <li><a href="#api-classes">Classes</a></li>
+            <li><a href="#api-modules">Modules</a></li>
+        </ul>
+
+        <div id="api-tabview-filter">
+            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+        </div>
+
+        <div id="api-tabview-panel">
+            <ul id="api-classes" class="apis classes">
+            
+                <li><a href="..&#x2F;classes/Box2.html">Box2</a></li>
+            
+                <li><a href="..&#x2F;classes/Box2.Ajax.html">Box2.Ajax</a></li>
+            
+                <li><a href="..&#x2F;classes/Box2.Configs.html">Box2.Configs</a></li>
+            
+                <li><a href="..&#x2F;classes/Box2.Controller.html">Box2.Controller</a></li>
+            
+                <li><a href="..&#x2F;classes/Box2.Datasource.SQLite.html">Box2.Datasource.SQLite</a></li>
+            
+                <li><a href="..&#x2F;classes/Box2.Device.html">Box2.Device</a></li>
+            
+                <li><a href="..&#x2F;classes/Box2.Forms.html">Box2.Forms</a></li>
+            
+                <li><a href="..&#x2F;classes/Box2.History.html">Box2.History</a></li>
+            
+                <li><a href="..&#x2F;classes/Box2.HTMLEntities.html">Box2.HTMLEntities</a></li>
+            
+                <li><a href="..&#x2F;classes/Box2.Inflector.html">Box2.Inflector</a></li>
+            
+                <li><a href="..&#x2F;classes/Box2.Loader.html">Box2.Loader</a></li>
+            
+                <li><a href="..&#x2F;classes/Box2.Mapper.html">Box2.Mapper</a></li>
+            
+                <li><a href="..&#x2F;classes/Box2.Model.html">Box2.Model</a></li>
+            
+                <li><a href="..&#x2F;classes/Box2.View.html">Box2.View</a></li>
+            
+            </ul>
+
+            <ul id="api-modules" class="apis modules">
+            
+            </ul>
+        </div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+        Show:
+        <label for="api-show-inherited">
+            <input type="checkbox" id="api-show-inherited" checked>
+            Inherited
+        </label>
+
+        <label for="api-show-protected">
+            <input type="checkbox" id="api-show-protected">
+            Protected
+        </label>
+
+        <label for="api-show-private">
+            <input type="checkbox" id="api-show-private">
+            Private
+        </label>
+        <label for="api-show-deprecated">
+            <input type="checkbox" id="api-show-deprecated">
+            Deprecated
+        </label>
+
+    </div>
+
+
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <h1 class="file-heading">File: box2.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+&#x2F;&#x2F; Box2 v0.1 beta - Javascript MVC Framework for Android PhoneGap
+&#x2F;&#x2F;
+&#x2F;&#x2F; @license http:&#x2F;&#x2F;www.opensource.org&#x2F;licenses&#x2F;mit-license.php The MIT License
+&#x2F;&#x2F; @copyright Copyright 2012, Box2 - Framework (http:&#x2F;&#x2F;box2.pagodabox.com&#x2F;)
+&#x2F;&#x2F; @author: Bruno Silva | eu@brunoziie.com
+
+&#x2F;**
+ * Framework Core
+ *
+ * @static
+ * @class Box2
+ **&#x2F;
+var Box2 = function(){	
+
+	&#x2F;&#x2F; Constructor
+	this.__construct = function() {
+		&#x2F;&#x2F; Start namespace of the application
+		this.namespace(&#x27;Models&#x27;);
+		this.namespace(&#x27;Views&#x27;);
+		this.namespace(&#x27;Layouts&#x27;);
+		this.namespace(&#x27;Controllers&#x27;);
+		this.namespace(&#x27;Components&#x27;);
+		this.namespace(&#x27;Helpers&#x27;);
+		this.namespace(&#x27;Datasource&#x27;);
+
+		return this;
+	}
+	
+	&#x2F;**
+	 * Initialize de application
+	 * 
+	 * @method bootUp
+	 * @return void
+	 *&#x2F;
+	this.bootUp = function(){
+		var that = this,
+			navigator = window.navigator;
+
+		&#x2F;&#x2F; Loads AppController
+		that.Loader.controller({controller:&#x27;app&#x27;}, null);
+
+		&#x2F;&#x2F; Apply event to hash change		
+		window.addEventListener(&#x27;hashchange&#x27;, function(){
+			var hash = window.location.hash.replace(&#x2F;\.\w+$&#x2F;, &#x27;&#x27;),
+				data = that.Mapper.parse(hash),
+				prev = that.Mapper.parse(that.History.prev()),
+				postData = that.Forms.getPostData();
+		
+			if(postData.length &gt; 0){
+				that.Forms.resetPostData();
+			}
+		
+			if(that.History.current() != hash &amp;&amp; that.History.prev() != hash){
+				that.History.add(hash);
+			}
+
+			that.Loader.controller(data, postData);
+			return false;
+		
+		}, false);
+
+		&#x2F;&#x2F; Override backbutton event
+		document.addEventListener(&#x27;backbutton&#x27;, function (){
+			var prev;
+			
+			if(that.History.length() &gt; 1){
+				prev = that.History.prev();
+				that.History.removeLast();
+				window.location.hash = prev;
+			}else{
+				console.log(navigator);
+				navigator.app.exitApp();
+			}
+		
+			return false;
+		});
+
+		&#x2F;&#x2F; Init application
+		window.location.hash = &#x27;#&#x2F;home&#x2F;index&#x27;;
+		
+	};
+	
+	&#x2F;**
+	 * Implements a extends utils
+	 * 
+	 * @method extend
+	 * @param  {Object}   obj    Object that will to be extended
+ 	 * @param  {Function} target New object implementation
+ 	 * @return {Object}          New object 
+	 *&#x2F;	
+	this.extend = function(obj, target){
+		var _parent = function(){};
+		_parent.prototype = (typeof obj == &#x27;function&#x27;) ? new obj : obj ;
+		target.prototype = new _parent;
+		return new target;
+	};
+	
+	&#x2F;**
+	 * Merge two objects
+	 * 
+	 * @method merge
+	 * @param  {Object} a First Object
+ 	 * @param  {Object} b Second Object
+ 	 * @return {Object}   Merge of the two objects
+	 *&#x2F;
+	this.merge = function(a, b){
+		var objA = function(){},
+			objB = function(){};
+
+			objA.prototype = a;
+			objB.prototype = b;
+	  
+	    var x = new objA,
+	    	y = new objB,
+	    	objC = {},
+	    	attrname;
+	  
+	    for(attrname in x) { objC[attrname] = x[attrname]; }
+	    for(attrname in y) { objC[attrname] = y[attrname]; }
+	
+	    return objC; 
+	};
+
+	&#x2F;**
+	 * Get length of a object
+	 * 
+	 * @method objlen
+	 * @param  {Object} obj Object that you want get the length
+	 * @return {Number}     Length of the object
+	 *&#x2F;
+	this.objlen = function(obj) {
+	    var size = 0, 
+	    	key;
+
+	    for (key in obj) {
+	        if (obj.hasOwnProperty(key)) {
+	        	size++;	
+	        }
+	    }
+
+	    return size;
+	};
+
+	&#x2F;**
+	 * Destroy a reference from a object
+	 * 
+	 * @method getObject
+	 * @param  {Object} obj Object that you want to get without parent reference
+	 * @return {Object}     New object without the parent reference
+	 **&#x2F;
+	this.getObject = function(obj){
+		var out = function(){};
+		out.prototype = obj;
+			
+		return new out();
+	};
+	
+	&#x2F;**
+	 * Add slashes to a string
+	 * 
+	 * @method addSlashes
+	 * @param  {String} str String for escape
+	 * @return {String}     Escaped string
+	 *&#x2F;
+	this.addSlashes = function(str){
+		&#x2F;&#x2F; Original by: Kevin van Zonneveld (http:&#x2F;&#x2F;kevin.vanzonneveld.net)
+		return (str + &#x27;&#x27;).replace(&#x2F;[\\&quot;&#x27;]&#x2F;g, &#x27;\\$&amp;&#x27;).replace(&#x2F;\u0000&#x2F;g, &#x27;\\0&#x27;);
+	};
+
+	&#x2F;**
+	 * Remove slashes from a string
+	 * 
+	 * @method stripSlashes
+	 * @param  {String} str String that contains slashes
+	 * @return {String}     String without slashes
+	 *&#x2F;
+	this.stripSlashes = function(str){
+		&#x2F;&#x2F; Original by: Kevin van Zonneveld (http:&#x2F;&#x2F;kevin.vanzonneveld.net)
+		return (str + &#x27;&#x27;).replace(&#x2F;\\(.?)&#x2F;g, function (s, n1) {
+			switch (n1) {
+				case &#x27;\\&#x27;:
+					return &#x27;\\&#x27;;
+				case &#x27;0&#x27;:
+					return &#x27;\u0000&#x27;;
+				case &#x27;&#x27;:
+					return &#x27;&#x27;;
+				default:
+					return n1;
+			}
+		});
+	};
+
+	&#x2F;**
+	 * Implements namespacing
+	 * 
+	 * @method namespace
+	 * @param  {String} path Namespacing path
+	 * @return void
+	 *&#x2F;
+	this.namespace = function(path){
+		var parts = path.split(&#x27;&#x2F;&#x27;),  
+			parent = this,  
+			pl = parts.length, 
+			i;
+	    
+	    for(i = 0; i &lt; pl; i++){
+	        if (typeof parent[parts[i]] == &#x27;undefined&#x27;) {  
+	            parent[parts[i]] = {};  
+	        }
+	        parent = parent[parts[i]];
+	    }
+	};
+
+	&#x2F;**
+	 * Includes Javascript or CSS files into the DOM
+	 * 
+	 * @method include
+	 * @param  {Mixed} filenames String or Array with the filenames
+	 * @return void
+	 *&#x2F;
+	this.include = function(filenames){
+		try{
+			var filelist = [],
+				x;
+	
+			if (typeof filenames == &#x27;string&#x27;) {
+				filelist.push(filenames);
+			} else if(typeof filenames == &#x27;object&#x27;){
+				filelist = filenames
+			}
+	
+			for (x = 0; x &lt; filelist.length; x++ ){
+				var ext = filelist[x].split(&#x27;.&#x27;),
+					filetype = ext[ext.length - 1];
+				
+				if (filetype ==	&#x27;js&#x27;){ 
+					&#x2F;&#x2F;if filename is a JavaScript file
+					var fileref = document.createElement(&#x27;script&#x27;);
+						fileref.setAttribute(&#x27;type&#x27;,&#x27;text&#x2F;javascript&#x27;);
+						fileref.setAttribute(&#x27;src&#x27;, filelist[x]);
+	
+				} else if (filetype == &#x27;css&#x27;){ 
+					&#x2F;&#x2F;if filename is a CSS file
+					var fileref = document.createElement(&#x27;link&#x27;);
+						fileref.setAttribute(&#x27;rel&#x27;, &#x27;stylesheet&#x27;);
+						fileref.setAttribute(&#x27;type&#x27;, &#x27;text&#x2F;css&#x27;);
+						fileref.setAttribute(&#x27;href&#x27;, filelist[x]);
+				}
+	
+				if (fileref !== void 0){
+					document.getElementsByTagName(&#x27;head&#x27;)[0].appendChild(fileref);
+				}
+			}
+			return true;
+		} catch(e) {
+			return false;
+		}
+	}
+
+	&#x2F;&#x2F; Call the constructor
+	return this.__construct.apply(this, arguments);
+};
+
+Box2 = new Box2();
+
+    </pre>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="..&#x2F;assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="..&#x2F;assets/js/yui-prettify.js"></script>
+<script src="..&#x2F;assets/../api.js"></script>
+<script src="..&#x2F;assets/js/api-filter.js"></script>
+<script src="..&#x2F;assets/js/api-list.js"></script>
+<script src="..&#x2F;assets/js/api-search.js"></script>
+<script src="..&#x2F;assets/js/apidocs.js"></script>
+</body>
+</html>

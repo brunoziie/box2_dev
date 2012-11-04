@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>box2.datasource.sqlite.js - Box2 Framework</title>
+    <link rel="stylesheet" href="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;3.7.0&#x2F;build&#x2F;cssgrids&#x2F;cssgrids-min.css">
+    <link rel="stylesheet" href="..&#x2F;assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="..&#x2F;assets/css/main.css" id="site_styles">
+    <link rel="shortcut icon" type="image/png" href="..&#x2F;assets/favicon.png">
+    <script src="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;combo?3.7.0&#x2F;build&#x2F;yui&#x2F;yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+            <h3>Box2 Framework</h3>
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: 0.2b</em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+    <h2 class="off-left">APIs</h2>
+    <div id="api-tabview" class="tabview">
+        <ul class="tabs">
+            <li><a href="#api-classes">Classes</a></li>
+            <li><a href="#api-modules">Modules</a></li>
+        </ul>
+
+        <div id="api-tabview-filter">
+            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+        </div>
+
+        <div id="api-tabview-panel">
+            <ul id="api-classes" class="apis classes">
+            
+                <li><a href="..&#x2F;classes/Box2.html">Box2</a></li>
+            
+                <li><a href="..&#x2F;classes/Box2.Ajax.html">Box2.Ajax</a></li>
+            
+                <li><a href="..&#x2F;classes/Box2.Configs.html">Box2.Configs</a></li>
+            
+                <li><a href="..&#x2F;classes/Box2.Controller.html">Box2.Controller</a></li>
+            
+                <li><a href="..&#x2F;classes/Box2.Datasource.SQLite.html">Box2.Datasource.SQLite</a></li>
+            
+                <li><a href="..&#x2F;classes/Box2.Device.html">Box2.Device</a></li>
+            
+                <li><a href="..&#x2F;classes/Box2.Forms.html">Box2.Forms</a></li>
+            
+                <li><a href="..&#x2F;classes/Box2.History.html">Box2.History</a></li>
+            
+                <li><a href="..&#x2F;classes/Box2.HTMLEntities.html">Box2.HTMLEntities</a></li>
+            
+                <li><a href="..&#x2F;classes/Box2.Inflector.html">Box2.Inflector</a></li>
+            
+                <li><a href="..&#x2F;classes/Box2.Loader.html">Box2.Loader</a></li>
+            
+                <li><a href="..&#x2F;classes/Box2.Mapper.html">Box2.Mapper</a></li>
+            
+                <li><a href="..&#x2F;classes/Box2.Model.html">Box2.Model</a></li>
+            
+                <li><a href="..&#x2F;classes/Box2.View.html">Box2.View</a></li>
+            
+            </ul>
+
+            <ul id="api-modules" class="apis modules">
+            
+            </ul>
+        </div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+        Show:
+        <label for="api-show-inherited">
+            <input type="checkbox" id="api-show-inherited" checked>
+            Inherited
+        </label>
+
+        <label for="api-show-protected">
+            <input type="checkbox" id="api-show-protected">
+            Protected
+        </label>
+
+        <label for="api-show-private">
+            <input type="checkbox" id="api-show-private">
+            Private
+        </label>
+        <label for="api-show-deprecated">
+            <input type="checkbox" id="api-show-deprecated">
+            Deprecated
+        </label>
+
+    </div>
+
+
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <h1 class="file-heading">File: box2.datasource.sqlite.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+&#x2F;**
+ * Sqlite local storage
+ *
+ * @static
+ * @class Box2.Datasource.SQLite
+ *&#x2F;
+Box2.Datasource.SQLite = function(){
+
+	var that = {};
+
+	&#x2F;**
+	 * Database instance
+	 * @private
+	 * @attribute
+	 * @type {Object}
+	 *&#x2F;
+	that.link = null;
+
+	&#x2F;**
+	 * Get instance from SQLite database 
+	 *
+	 * @method getInstance
+	 * @return {Object} Instance object
+	 *&#x2F;
+	this.getInstance = function(){
+		if(that.link == null){
+			var configs = Box2.Configs.read(&#x27;database&#x27;) || { name: &#x27;db&#x27;, version: 1, description: &#x27;&#x27;, size : 2000000 };
+			that.link = openDatabase(configs.name, configs.version, configs.description, configs.size);
+		}
+		return that;
+	};
+
+	&#x2F;**
+	 * Converts conditions to sql format
+	 *
+	 * @method parseConditions
+	 * @param  {Object} conditions Conditions list
+	 * @return {Strinh}            Conditions list in sql format
+	 *&#x2F;
+	that.parseConditions = function(conditions){
+		var conditionsList = [],
+			conditionsString = &#x27;&#x27;,
+			fieldName, field,
+			operator, 
+			regex,
+			testOperator;
+
+		if(typeof conditions == &#x27;object&#x27;) {
+			if(Box2.objlen(conditions) &gt; 0) {
+				for(field in conditions){
+					if(conditions.hasOwnProperty(field)){
+						fieldName = field;
+						operator = &#x27;=&#x27;;
+						regex = &#x2F;([\w_]+)\s(=|&lt;&gt;|!=|&lt;=|&lt;|&gt;=|&gt;|&lt;=&gt;|LIKE|REGEXP)&#x2F;;
+						testOperator = fieldName.match(regex);
+
+						if(testOperator != null) {
+							fieldName = testOperator[1];
+							operator = testOperator[2];
+						}
+
+						conditionsList.push(fieldName + &#x27; &#x27; + operator + &#x27; &quot;&#x27; + Box2.addSlashes(conditions[field].toString()) + &#x27;&quot;&#x27;);
+					}
+				}
+			}
+
+			if(conditionsList.length &gt; 0){
+				conditionsString = &#x27; WHERE &#x27; + conditionsList.join(&#x27; AND &#x27;);
+			}
+		}
+		
+		return conditionsString;
+	};
+
+	&#x2F;**
+	 * Converts fields list to sql format
+	 *
+	 * @method parseFields
+	 * @param  {Object} fields Fields list
+	 * @return {String}        Fields list in sql format
+	 *&#x2F;
+	that.parseFields = function(fields){
+		var fieldsString = &#x27;*&#x27;,
+			fieldsList = [];
+
+		if(typeof fields == &#x27;object&#x27;){
+			if(fields.length &gt; 0) {
+				for(var x = 0; x &lt; fields.length; x++){
+					fieldsList.push(fields[x]);
+				}
+				fieldsString = fieldsList.join(&#x27;, &#x27;);			
+			}
+		}
+		return fieldsString;
+	};
+
+
+	&#x2F;**
+	 * Run a query
+	 *
+	 * @method query
+	 * @param  {String}   query    Query for run
+	 * @param  {Function} callback Sucess callback
+	 * @param  {Function} error    Error callback
+	 * @return void
+	 *&#x2F;	
+	that.query = function(query, success, error) {
+		var success = success || function(){},
+			error = error || function(){},
+			queryFunction = function(link) {
+				return link.executeSql(query, [], function(){}, function(){});
+			};
+
+		that.link.transaction(queryFunction, error, success);
+	};
+
+	&#x2F;**
+	 * Run many queries
+	 *
+	 * @method multiQuery
+	 * @param  {Function} functionsLote Function with the queries
+	 * @param  {Function} callback      Sucess callback
+	 * @param  {Function} error         Error callback
+	 * @return void
+	 *&#x2F;
+	that.multiQuery = function(functionsLote, success, error) {
+		var success = success || function(){},
+			error = error || function(){};
+
+		that.link.transaction(functionsLote, success, error);
+	};
+
+	&#x2F;**
+	 * Parse params and run a query
+	 *
+	 * @method fetch
+	 * @param {Object}   model    Model from table
+	 * @param {Object}   params   Params for the query
+	 * @param {Function} callback Sucess callback
+	 * @param {Function} error    Error callback
+	 * @return void
+	 **&#x2F;
+	that.fetch = function(model, params, callback, error){
+		var fields = Box2.getObject(model.fields),
+			conditions = Box2.getObject(model.conditions),
+			limit = model.limit,
+			order = model.order,
+			limitString = &#x27;&#x27;,
+			orderString = &#x27;&#x27;,
+			conditionsString,
+			fieldsString,
+			query;
+
+		if(typeof params != &#x27;undefined&#x27;){
+			if(typeof params.conditions == &#x27;object&#x27;){
+				conditions = Box2.merge(conditions, params.conditions);			
+			}
+			if(typeof params.fields == &#x27;object&#x27;){
+				fields = Box2.merge(fields, params.fields);					
+			}
+			if(typeof params.order != &#x27;undefined&#x27;){
+				order = &#x27; ORDER BY &#x27; + params.order;				
+			}
+			if(typeof params.limit != &#x27;undefined&#x27;){
+				limit = params.limit;
+			}
+		}
+
+		conditionsString = that.parseConditions(conditions);
+		fieldsString = that.parseFields(fields);
+
+ 		if(limit != false){
+ 			limitString = &#x27; LIMIT &#x27; + limit;
+ 		}
+ 		if(order != false){
+ 			orderString = &#x27; ORDER BY &#x27; + order;
+ 		}
+
+		if(model.table != &#x27;&#x27;){
+			query = &#x27;SELECT &#x27; + fieldsString + &#x27; FROM &#x27; + model.table + conditionsString + orderString + limitString;	
+			that.query(query, callback, error);
+		}else{
+			error({message: &#x27;Table name is not defined&#x27;});
+		}
+	};
+
+	&#x2F;**
+	 * Convert query results in a associative array
+	 *
+	 * @method fetchArray
+	 * @param  {Object} queryResult Query result
+	 * @return {Array}              Associative array
+	 *&#x2F;
+	that.fetchArray = function(queryResult) {
+		var rows = queryResult.rows,
+			length = rows.length,
+			x = 0,
+			results = [];
+
+		while (x &lt; length) {
+			results.push(rows.item(x));
+			x++;
+		}
+
+		return results;
+	};
+
+	&#x2F;**
+	 * Insert a new entry into database
+	 *
+	 * @method insert
+	 * @param {Object}   model    Model from table
+	 * @param {Object}   data     Object at format key:value, with the fields and values to save into table
+	 * @param {Function} callback Sucess callback
+	 * @param {Function} error    Error callback
+	 * @return void
+	 **&#x2F;
+	that.insert = function(model, data, callback, error){
+		var fields = [],
+			values = [],
+			field, 
+			fieldsString, 
+			valuesString,
+			query;
+
+		if(typeof data == &#x27;object&#x27;){
+			for(field in data){
+				if(data.hasOwnProperty(field)){
+					fields.push(field);
+					values.push(&#x27;&quot;&#x27;+data[field]+&#x27;&quot;&#x27;);
+				}
+			}
+		}
+
+		fieldsString = fields.join(&#x27;, &#x27;);
+		valuesString = values.join(&#x27;, &#x27;);
+
+		if(model.table != &#x27;&#x27; &amp;&amp; model.table != false) {
+			if(fields.length &gt; 0) {
+				query = &#x27;INSERT INTO &#x27; + model.table + &#x27; (&#x27;+fieldsString+&#x27;) VALUES(&#x27;+valuesString+&#x27;)&#x27;;
+				that.query(query, callback, error);
+			} else {
+				error({ message: &#x27;Mo data to insert&#x27; });
+			}
+		} else {
+			error({ message: &#x27;Table name is not defined&#x27; });
+		}
+	};
+
+	&#x2F;**
+	 * Update one or many entry into database
+	 *
+	 * @method update
+	 * @param {Object}   model      Model from table
+	 * @param {Object}   data       Object at format key:value, with the fields and values to update into table
+	 * @param {Object}   conditions Conditions to update
+	 * @param {Function} callback   Sucess callback
+	 * @param {Function} error      Error callback
+	 * @return void
+	 **&#x2F;
+	that.update = function(model, data, conditions, callback, error){
+		var primaryKeyData = {},
+			conditionsString,
+			fields = [],
+			field,
+			query;
+
+		for(field in data){
+			if(data.hasOwnProperty(field)){
+				if(field == model.primaryKey){
+					primaryKeyData[field] = data[field];
+				}
+				fields.push(field + &#x27; = &quot;&#x27; + data[field] + &#x27;&quot;&#x27;);
+			}
+		}
+
+		conditions = (typeof conditions == &#x27;object&#x27;) ? Box2.merge(Box2.getObject(model.conditions), conditions) : primaryKeyData ;
+		conditionsString = that.parseConditions(conditions);
+
+		if(model.table != &#x27;&#x27; &amp;&amp; model.table != false) {
+			if(fields.length &gt; 0) {
+				query = &#x27;UPDATE &#x27; + model.table + &#x27; SET &#x27; + fields.join(&#x27;, &#x27;) + conditionsString;
+				that.query(query, callback, error);
+			} else {
+				error({ message: &#x27;No data to update&#x27; });
+			}
+		} else {
+			error({ message: &#x27;Table name is not defined&#x27; });
+		}
+	};
+
+	&#x2F;**
+	 * Delete entries from database
+	 *
+	 * @method remove
+	 * @param  {Object}   model      Model from table
+	 * @param  {Object}   params     Params for the query
+	 * @param  {Function} callback   Sucess callback
+	 * @param  {Function} error      Error callback
+	 * @return void
+	 *&#x2F;
+	that.remove = function(model, params, callback, error){
+		var conditions = Box2.getObject(model.conditions),
+			limit = &#x27;&#x27;,
+			order = &#x27;&#x27;,
+			conditionsString,
+			query;
+
+		if(typeof params != &#x27;undefined&#x27;){
+			if(typeof params.conditions !== &#x27;undefined&#x27;){
+				if(typeof params.conditions == &#x27;object&#x27;){
+					conditions = Box2.merge(conditions, params.conditions);				
+				}
+			}
+		}
+
+		conditionsString = that.parseConditions(conditions);
+
+		if(model.table != &#x27;&#x27;){
+			query = &#x27;DELETE FROM &#x27; + model.table + conditionsString;	
+			that.query(query, callback, error);
+		}else{
+			error({message: &#x27;Table name is not defined&#x27;});
+		}
+	};
+
+	&#x2F;&#x2F; Call constructor
+	return this.getInstance.apply(this, arguments);
+};
+
+    </pre>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="..&#x2F;assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="..&#x2F;assets/js/yui-prettify.js"></script>
+<script src="..&#x2F;assets/../api.js"></script>
+<script src="..&#x2F;assets/js/api-filter.js"></script>
+<script src="..&#x2F;assets/js/api-list.js"></script>
+<script src="..&#x2F;assets/js/api-search.js"></script>
+<script src="..&#x2F;assets/js/apidocs.js"></script>
+</body>
+</html>
