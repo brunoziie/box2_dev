@@ -8,7 +8,7 @@ This framework already includes:
 - Cordova plugin version 1.5.0
 - Handlebars 1.0.rc.1
 - iScroll 
-- jQuery 1.8.2 (default desabled)
+- jQuery 1.8.2 (default disabled)
 
 ## API Doc
 http://box2.pagodabox.com/docs
